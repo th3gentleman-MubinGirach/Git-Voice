@@ -53,7 +53,7 @@ elif ("add" in user1i or "upload" in user1i):
      add="git add"+file
      sp.run(add)
 
-elif (
+
     
    
         
