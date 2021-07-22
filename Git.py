@@ -1,3 +1,4 @@
+from _typeshed import IdentityFunction
 import subprocess as sp
 import speech_recognition as sr
 import pyttsx3
@@ -53,7 +54,13 @@ elif ("add" in user1i or "upload" in user1i):
      add="git add"+file
      sp.run(add)
 
-elif (
+
+
+git init 
+where u want to initialize 
+git init - for current directory
+git init remote-directory 
+
     
    
         
