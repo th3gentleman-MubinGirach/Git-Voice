@@ -6,7 +6,7 @@ import os
 import pyaudio
 
 
-main()
+
 
 
 
@@ -75,19 +75,19 @@ def restore():
 
 
 def lfs():
-speak("Ok so you are having a large file no problem i have got a solution for it")
-sp.run("git install lfs")
-speak("Now let us track the file you want upload")
-speak("If you want to add all files with a certain extension we can do that or we can simply add one file")
-trk=input("Enter the directory you want to track: ")
-track="git track"+" "trk
-sp.run(track)
-speak("Now let us add that large file")
-lf=input("name of large file: ")
-addlf="git add"+" "+lf
-sp.run(addlf)
-commit()
-push()
+    speak("Ok so you are having a large file no problem i have got a solution for it")
+    sp.run("git install lfs")
+    speak("Now let us track the file you want upload")
+    speak("If you want to add all files with a certain extension we can do that or we can simply add one file")
+    trk=input("Enter the directory you want to track: ")
+    track="git track"+" "+trk
+    sp.run(track)
+    speak("Now let us add that large file")
+    lf=input("name of large file: ")
+    addlf="git add"+" "+lf
+    sp.run(addlf)
+    commit()
+    push()
 
 
 
@@ -156,6 +156,8 @@ def push():
     sp.run(rmto)
     sp.run("git push -u origin main")
     speak("hey user you are good to go all files are uploaded")
+
+main()
 
 
 
