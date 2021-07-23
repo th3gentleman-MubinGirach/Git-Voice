@@ -37,7 +37,9 @@ def main():
 
     elif("upload large file" in user1i):
         lfs()
-
+    
+    elif ("scratch" or "start" in user1i)
+        repo()
 
 
 
@@ -197,8 +199,7 @@ main()
 
      
     
-#if ("init"in useri):
-    #os.system("git init")
+
 
 
 
