@@ -141,6 +141,7 @@ def addfls():
         sp.run("git init")
         sp.run("git add .")
     else:
+<<<<<<< HEAD
         speak("Please write the name of files in the below prompt")
         print("Example file1.txt file2.py ")
         file=input("Enter the file names with extensions: ")
@@ -174,6 +175,26 @@ def push():
     
 
 
+=======
+        speak("I tried installing git for windows , ubuntu and redhat but nothing worked try using the program in a terminal with admin privileges")
+        
+elif ("add" in user1i or "upload" in user1i):
+   with sr.Microphone() as source1:
+    speak("Which file you want to add")
+    user2=rec.listen(source1)
+    speak("Ok wait")
+   user2i=rec.recognize_google(user2)
+   print(user2i)
+   if ("all" in user2i):
+    sp.run("git init")
+    sp.run("git add .")
+   else:
+     speak("Please write the name of files in the below prompt")
+     print("Example file1.txt file2.py ")
+     file=input("Enter the file names with extensions: ")
+     add="git add"+file
+     sp.run(add)
+>>>>>>> db4019b0d7fe9e68955575aad0f6203c66f5887d
 
 
     
