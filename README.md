@@ -1,6 +1,12 @@
 # Git-Voice
 <h1>Voice based Git tool</h1>
 <b>Some features of this tool<b>
-<ol>
-<li>Beginner freindly </li>
-</ol>
+<ul>
+<li>Beginner friendly </li>
+<li> Covers almost all the basic features </li>
+<li>Specially developed for increasing efficiency </li>
+<li>Would be a dynamic project </li>
+</ul>
+
+
+   
