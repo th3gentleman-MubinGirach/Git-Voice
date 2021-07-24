@@ -56,6 +56,9 @@ def main():
         elif("apply local change" in user0i or "apply temporary change" in user0i):
             stashapp()
         
+        elif("install" in user0i or "configure" in user0i):
+            install():
+        
         elif("nothing" in user0i or "finish" in user0i or "exit" in user0i):
             break
         
@@ -84,6 +87,8 @@ def init():
     print(user01i)
     if ("yes" in user01i or "want to" in user01i):
         speak("Please enter the directory where you want to intialise a repository")
+        cdir=os.getcwd()
+        print("This is you current directory",cdir)
         rmtd=input("Enter the directory path: ")
         initr="git init"+" "+rmtd
         sp.run(initr)
@@ -205,6 +210,17 @@ def stashapp():
         lfs()
     else:
         speak("no problem")
+    
+def install()
+    sp.run("choco install git")
+    speak("Please enter your username")
+    usrm=input("Enter your username: ")
+    speak("Please enter your email address")
+    eml=input("Enter your email: ")
+    usrcfg="git config --global user.name"+" "+usrm
+    emlcfg="git config --global user.email"+" "+eml
+    sp.run(usrcfg)
+    sp.run(emlcfg)
 
     
 
