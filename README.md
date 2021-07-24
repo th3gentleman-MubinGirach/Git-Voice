@@ -8,5 +8,8 @@
 <li>Would be a dynamic project </li>
 </ul>
 
+Note: Use a earphone for microphone and you can configure that by going Sound Settings > Changing you Input device to >Headset Microphone
+   
+   
 
    
