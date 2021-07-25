@@ -8,7 +8,7 @@
 <li>Would be a dynamic project </li> </b>
 </ul>
 
-Note: Use a earphone for microphone and you can configure that by going Sound Settings > Changing you Input device to >Headset Microphone
+Note: Use a earphone for microphone and you can configure that by going Sound Settings > Changing you Input device to >Headset Microphone &
 <b>start speaking after 2-3 seconds once the robot completes speaking for better results </b>
    
    
