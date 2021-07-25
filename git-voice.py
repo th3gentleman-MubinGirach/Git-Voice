@@ -3,9 +3,7 @@ import speech_recognition as sr
 from win32com.client import Dispatch
 import os
 import webbrowser
-from word2number import w2n
-
-
+import time
 
 
 speak = Dispatch("SAPI.SpVoice").Speak
@@ -15,16 +13,18 @@ speak("Before doing any action please let me know the repository where the tasks
 rsp=input("Enter the repository url:  ")
 
 
+
 def main():
+    init()
+    
     while True: 
-        
         with sr.Microphone() as source0:               
             speak("Tell me what can i do for you")
-            user0=rec.listen(source0)                  
-            speak("Ok wait")
+            rec.adjust_for_ambient_noise(source0, duration=2)
+            user0=rec.listen(source0)              
         user0i=rec.recognize_google(user0)             
         
-        print("You told this just now",user0i)
+        print("You told ",user0i)
         
         if ("create" in user0i or "initialise" in user0i or "initialize" in user0i):
             init()
@@ -32,10 +32,10 @@ def main():
         elif ("clone" in user0i or "download" in user0i or "copy" in user0i):
             cln()
        
-        elif ("restore" in user0i):
+        elif ("restore" in user0i or "retrieve" in user0i):
             restore()
         
-        elif("upload" in user0i or "upload code" in user0i):
+        elif("upload" in user0i or "upload code" in user0i or "push" in user0i):
             lfs()
         
         elif ("scratch" in user0i or "start" in user0i):
@@ -47,17 +47,14 @@ def main():
         elif ("push" in user0i):
             push()
         
-        elif ("revert" in user0i or "undo" in user0i):
+        elif ("revert" in user0i or "undo" in user0i or "revert" and "change" in user0i):
             revert()
         
-        elif ("save locally" in user0i or "temporary save" in user0i):
+        elif ("save" in user0i or "temporarily" in user0i or "stash" in user0i):
             stash()
         
-        elif("apply local change" in user0i or "apply temporary change" in user0i):
+        elif("apply" and " temporary save" in user0i or "apply temporary change"  in user0i or "apply temporary change" in user0i or "stash apply" in user0i):
             stashapp()
-        
-        elif("install" in user0i or "configure" in user0i):
-            install():
         
         elif("nothing" in user0i or "finish" in user0i or "exit" in user0i):
             break
@@ -67,9 +64,12 @@ def main():
 
 def lfs():
     speak("Ok so you want to upload files no problem i have got a solution for it")
-    init()
-    fetch="git fetch"+" "+rsp
-    sp.run(fetch)
+    time.sleep(2)
+    speak("Where are your files located")
+    currdir=os.getcwd()
+    print("This is you current directory",currdir)
+    lctfls=input("Enter the location of files: ")
+    os.chdir(lctfls)
     speak("Now let us add the file you want to upload")
     lfi=input("Enter the name of file , if you want to add multiple files use this format file1.txt file2.py:  ")
     addlf1="git add"+" "+lfi
@@ -82,42 +82,54 @@ def init():
     speak("Do you want to initialize the repository")
     with sr.Microphone() as source01:
         user01=rec.listen(source01)
-        speak("Ok wait")
     user01i=rec.recognize_google(user01)
+    speak("Ok wait")
     print(user01i)
-    if ("yes" in user01i or "want to" in user01i):
+    if ("yes " in user01i or "i want to" in user01i or "initialise" in user01i):
         speak("Please enter the directory where you want to intialise a repository")
         cdir=os.getcwd()
         print("This is you current directory",cdir)
         rmtd=input("Enter the directory path: ")
         initr="git init"+" "+rmtd
         sp.run(initr)
-    else:
+    elif("no" in user01i or "it is" in user01i or "it's already initialized" in user01i or " it's already initialised" in user01i):
         speak("Ok it seems that you already have an repository initialized")
 
 def commit():
     speak("Now as we have added the files let's commit them please say what should be the commit message")
     with sr.Microphone() as source02:
+        rec.adjust_for_ambient_noise(source02, duration=1)
         user02=rec.listen(source02)
-        user02i=rec.recognize_google(user02)
-        print(user02i)
+    user02i=rec.recognize_google(user02)
+    print(user02i)
     cmtmsg='git commit -m'+' '+'"'+user02i+'"'
     print(cmtmsg)
     sp.run(cmtmsg)
 
 def push():
     speak("Now as we have committed the files we need to push our files")
+
     speak("In which branch you want to push the files")
     speak("If you want main branch keep the letter M of it capital")
-    print("Main")
+    
     branch=input("Branch name : ")
-    branchc="git checkout -b"+" "+branch
-    sp.run(branchc)
-    brnch="git branch -M"+" "+branch
-    psh="git push"+" "+rsp+" "+branch
-    sp.run(brnch)
-    sp.run(psh)
-    speak("hey user you are good to go all files are uploaded")    
+    speak("Do you want to create new branch")
+    with sr.Microphone() as source09:
+        rec.adjust_for_ambient_noise(source09, duration=1)
+        user09=rec.listen(source09)
+    user09i=rec.recognize_google(user09)
+    print(user09i)
+    if("yes" in user09i or "create" and "new" in user09i):
+        branchc="git checkout -b"+" "+branch
+        sp.run(branchc)
+    else:
+        fetch="git fetch"+" "+rsp
+        sp.run(fetch)
+        psh="git push --force"+" "+rsp+" "+branch
+        sp.run(brnch)
+        sp.run(psh)
+        time.sleep(2)
+        speak("hey user you are good to go all files are uploaded")    
 
 def cln():
     speak("please write the username followed by the repository name which you want to clone")
@@ -136,6 +148,8 @@ def revert():
     speak("No problem if you have committed a mistake we will try to fix it")
     with sr.Microphone() as source04:
         speak("Tell me in which branch you want undo the changes")
+        time.sleep(0.20)
+        rec.adjust_for_ambient_noise(source04)
         user04=rec.listen(source04)
         speak("Ok wait")
     user04i=rec.recognize_google(user04)
@@ -151,6 +165,7 @@ def revert():
     sp.run(chg)
     speak("Now do you want to push these updates")
     with sr.Microphone() as source05:
+        time.sleep(0.25)
         user05=rec.listen(source05)
         speak("Ok wait")
     user05i=rec.recognize_google(user05)
@@ -163,27 +178,25 @@ def revert():
 
 def restore():
     speak("Please make sure that the file you want to restore was been tracked by git before it got deleted")
-    speak("Please tell me which file you want to restore")
+    speak("Please provide me the name of file which you want to restore")
     rstr=input("Enter the filename: ")
     restr="git restore"+" "+rstr
     sp.run(restr)
 
 def repo():
     speak("Ok great seems so you have created a brand new repository let me help you")
-    init()
-    speak("Respository initialised lets add files now ")
+    time.sleep(3)
     lfs()
-    commit()
-    push()
-
+    
 def stash():
     speak("I understand that you want to keep your workspace clean we got a solution for it")
     speak("what should be the temporary save named as ")
     with sr.Microphone() as source06:
+        rec.adjust_for_ambient_noise(source06)
         user06=rec.listen(source06)
-        speak("performing temporary save")
     user06i=rec.recognize_google(user06)
     print(user06i)
+    speak("performing temporary save")
     stsh="git stash save"+" "+user06i
     sp.run(stsh)
 
@@ -193,6 +206,7 @@ def stashapp():
     sp.run("git stash list")
     speak("Tell me the serial number of the stash and i will apply it for you")
     with sr.Microphone() as source07:
+        rec.adjust_for_ambient_noise(source07)
         user07=rec.listen(source07)
     user07i=rec.recognize_google(user07)
     print(user07i)
@@ -211,18 +225,7 @@ def stashapp():
     else:
         speak("no problem")
     
-def install()
-    sp.run("choco install git")
-    speak("Please enter your username")
-    usrm=input("Enter your username: ")
-    speak("Please enter your email address")
-    eml=input("Enter your email: ")
-    usrcfg="git config --global user.name"+" "+usrm
-    emlcfg="git config --global user.email"+" "+eml
-    sp.run(usrcfg)
-    sp.run(emlcfg)
 
     
 
-    
 main()
