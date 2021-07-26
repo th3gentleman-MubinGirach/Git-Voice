@@ -53,10 +53,10 @@ def main():
         elif ("save" in user0i or "temporarily" in user0i or "stash" in user0i):
             stash()
         
-        elif("apply" and " temporary save" in user0i or "apply temporary change"  in user0i or "apply temporary change" in user0i or "stash apply" in user0i):
+        elif("apply" or "apply temporary"  in user0i or "stash apply" in user0i):
             stashapp()
         
-        elif("nothing" in user0i or "finish" in user0i or "exit" in user0i):
+        elif("nothing to do" in user0i or "please exit" in user0i or "exit" in user0i):
             break
         
         else:
@@ -92,7 +92,7 @@ def init():
         rmtd=input("Enter the directory path: ")
         initr="git init"+" "+rmtd
         sp.run(initr)
-    elif("no" in user01i or "it is" in user01i or "it's already initialized" in user01i or " it's already initialised" in user01i):
+    elif("no" in user01i or "it is" in user01i or "already" in user01i or "it's already initialized" in user01i or " it's already initialised" in user01i):
         speak("Ok it seems that you already have an repository initialized")
 
 def commit():
@@ -110,21 +110,22 @@ def push():
     speak("Now as we have committed the files we need to push our files")
 
     speak("In which branch you want to push the files")
-    speak("If you want main branch keep the letter M of it capital")
-    
-    branch=input("Branch name : ")
+    with sr.Microphone() as source08:
+        user08=rec.listen(source08)
+    branch=rec.recognize_google(user08)
+    print(branch)
     speak("Do you want to create new branch")
     with sr.Microphone() as source09:
-        rec.adjust_for_ambient_noise(source09, duration=1)
         user09=rec.listen(source09)
     user09i=rec.recognize_google(user09)
     print(user09i)
     if("yes" in user09i or "create" and "new" in user09i):
-        branchc="git checkout -b"+" "+branch
-        sp.run(branchc)
+        chkout="git checkout -b"+" "+branch
+        sp.run(chkout)
     else:
         fetch="git fetch"+" "+rsp
         sp.run(fetch)
+        brnch="git branch -M"+" "+branch
         psh="git push --force"+" "+rsp+" "+branch
         sp.run(brnch)
         sp.run(psh)
