@@ -12,6 +12,8 @@
 
 Note: Use a earphone for microphone and you can configure that by going Sound Settings > Changing you Input device to >Headset Microphone &
 <b>start speaking after 2-3 seconds once the robot completes speaking for better results </b>
+
+<b>For Reference Video <a href="https://www.linkedin.com/posts/mubingirach_innovation-creativity-technology-activity-6825298971162890240-zF6l">Click here</a>
    
 
    
